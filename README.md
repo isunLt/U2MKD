@@ -86,7 +86,7 @@ python3 prepare_waymo_inst_database.py
 1. Run the following command to train uni-modal teacher model. (*e.g.* SphereFormer)
 
 ```bash
-CUDA_VISIBLE_DEVICES=0,1,2,3 torchpack dist-run -np 4 train_spformer.py configs/nuscenes/train/spformer.yaml --run-dir runs/nusc/spvcnnn_spformer_cr2p0_multisweeps4_ep25_seed123
+CUDA_VISIBLE_DEVICES=0,1,2,3 torchpack dist-run -np 4 python3 train_spformer.py configs/nuscenes/train/spformer.yaml --run-dir runs/nusc/spvcnnn_spformer_cr2p0_multisweeps4_ep25_seed123
 ```
 
 2. Modify the ``teacher_pretrain`` in ``configs/nuscenes/train/spformer_tsd_full.yaml`` to the path of uni-modal teacher model trained in Step 1.
@@ -98,5 +98,5 @@ teacher_pretrain: /data2/stf/codes/lifusion/runs/nusc_rq/spvcnnn_spformer_cr2p0_
 3. Run the following command to train cross-modal student model.
 
 ```bash
-CUDA_VISIBLE_DEVICES=0,1,2,3 torchpack dist-run -np 4 train_lc_nusc_tsd_full.py configs/nuscenes/train/spformer_tsd_full.yaml --run-dir runs/nusc/spformer_swiftnet18_cr2p0_tsd_multisweeps4_ep25_seed123
+CUDA_VISIBLE_DEVICES=0,1,2,3 torchpack dist-run -np 4 python3 train_lc_nusc_tsd_full.py configs/nuscenes/train/spformer_tsd_full.yaml --run-dir runs/nusc/spformer_swiftnet18_cr2p0_tsd_multisweeps4_ep25_seed123
 ```
