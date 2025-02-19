@@ -86,17 +86,34 @@ python3 prepare_waymo_inst_database.py
 1. Run the following command to train uni-modal teacher model. (*e.g.* SphereFormer)
 
 ```bash
-CUDA_VISIBLE_DEVICES=0,1,2,3 torchpack dist-run -np 4 python3 train_spformer.py configs/nuscenes/train/spformer.yaml --run-dir runs/nusc/spvcnnn_spformer_cr2p0_multisweeps4_ep25_seed123
+CUDA_VISIBLE_DEVICES=0,1,2,3 torchpack dist-run -np 4 python3 train_spformer.py configs/nuscenes/train/spformer.yaml --run-dir runs/nusc/spvcnn_spformer_cr2p0_multisweeps4_ep25_seed123
 ```
 
-2. Modify the ``teacher_pretrain`` in ``configs/nuscenes/train/spformer_tsd_full.yaml`` to the path of uni-modal teacher model trained in Step 1.
+2. Modify the ``teacher_pretrain`` in ``configs/nuscenes/train/spformer_tsd_full_ours_star.yaml`` to the path of uni-modal teacher model trained in Step 1.
 
 ```yaml
-teacher_pretrain: /data2/stf/codes/lifusion/runs/nusc_rq/spvcnnn_spformer_cr2p0_multisweeps4_ep25_seed123/checkpoints/max-iou-val-vox.pt
+teacher_pretrain: /data2/stf/codes/lifusion/runs/nusc_rq/spvcnn_spformer_cr2p0_multisweeps4_ep25_seed123/checkpoints/max-iou-val-vox.pt
 ```
 
 3. Run the following command to train cross-modal student model.
 
 ```bash
-CUDA_VISIBLE_DEVICES=0,1,2,3 torchpack dist-run -np 4 python3 train_lc_nusc_tsd_full.py configs/nuscenes/train/spformer_tsd_full.yaml --run-dir runs/nusc/spformer_swiftnet18_cr2p0_tsd_multisweeps4_ep25_seed123
+CUDA_VISIBLE_DEVICES=0,1,2,3 torchpack dist-run -np 4 python3 train_lc_nusc_tsd_full.py configs/nuscenes/train/spformer_tsd_full_ours_star.yaml --run-dir runs/nusc/spformer_swiftnet18_cr2p0_tsd_multisweeps4_ep25_seed123
+```
+
+# Acknowledgement
+This repo is built upon [torchpack](https://github.com/zhijian-liu/torchpack), [torchsparse](https://github.com/mit-han-lab/torchsparse), [SphereFormer](https://github.com/dvlab-research/SphereFormer), [SwiftNet](https://github.com/orsic/swiftnet).
+
+# Citation
+If you find this repo useful, please consider citing our paper:
+```bibtex
+@ARTICLE{sun2024u2mkd,
+  author={Sun, Tianfang and Zhang, Zhizhong and Tan, Xin and Peng, Yong and Qu, Yanyun and Xie, Yuan},
+  journal={IEEE Transactions on Pattern Analysis and Machine Intelligence}, 
+  title={Uni-to-Multi Modal Knowledge Distillation for Bidirectional LiDAR-Camera Semantic Segmentation}, 
+  year={2024},
+  volume={46},
+  number={12},
+  pages={11059-11072},
+  doi={10.1109/TPAMI.2024.3451658}}
 ```

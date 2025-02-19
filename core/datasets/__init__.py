@@ -1,0 +1,1 @@
+from .lc_semantic_kitti import LCSemanticKITTI
