@@ -1,0 +1,14 @@
+criterion:
+  name: lc_lovasz
+  ignore_index: 0
+
+dataset:
+  name: lc_semantic_nusc
+  im_cr: 0.4
+
+model:
+  imagenet_pretrain: /home/stf/workspace/codes/lifusion/pretrain/resnet18-5c106cde.pth
+  in_channel: 4
+  proj_channel: 256
+  name: spvcnn_swiftnet18
+  cr: 0.64

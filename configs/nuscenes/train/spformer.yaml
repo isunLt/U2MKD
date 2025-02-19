@@ -1,0 +1,45 @@
+train:
+  seed: 123
+  deterministic: False
+
+criterion:
+  name: lovasz
+  ignore_index: 0
+
+dataset:
+  name: semantic_nusc
+  flip_aug: True
+  rotate_aug: True
+  inst_aug: False
+  translate_std: [0.1, 0.1, 0.1]
+  inst_pkl_path: /data/share/nuscenes/inst_database_train_info.pkl
+  inst_add_num: 0
+  multisweeps:
+    num_sweeps: 2
+    only_past: False
+  polar_mix: False
+  laser_mix:
+    enable: False
+    num_areas:
+      - 3
+      - 4
+      - 5
+      - 6
+    pitch_angles:
+      - -30
+      - 10
+
+model:
+  in_channel: 4
+  name: spvcnn_spformer
+  quant_size_scale: 24
+  patch_size: 1
+  window_size: 6
+  drop_path_rate: 0.3
+  window_size_sphere: [2, 2, 120]
+  window_size_scale: [2.0, 2.0]
+  a: 0.0125
+  cr: 1.0
+
+num_epochs: 25
+batch_size: 3

@@ -1,0 +1,52 @@
+criterion:
+  name:
+    - lovasz
+    - kl
+    - mse
+  w_kl: 1.0
+  w_feat: 1.0
+  ignore_index: 0
+  mse_norm_feat: False
+
+dataset:
+  name: lc_semantic_nusc_tsd_full
+  flip: True
+  im_drop: 3
+  im_cr: 0.4
+  inst_aug: False
+  inst_pkl_path: /data/stf/datasets/nuscenes/inst_database_train_info.pkl
+  inst_add_num: 6
+  multisweeps:
+    num_sweeps: 2
+    only_past: False
+
+num_epochs: 50
+batch_size: 4
+
+model:
+  imagenet_pretrain: /data/stf/codes/lifusion/pretrain/resnet18-5c106cde.pth
+#  teacher_pretrain: /data/stf/codes/lifusion/runs/nuscenes/spvcnn_cr2p0_multisweeps4_ep40/checkpoints/max-iou-val-vox.pt
+  teacher_pretrain: /data2/stf/codes/lifusion/runs/nusc_rq/spvcnnn_spformer_cr2p0_multisweeps4_ep25_seed123/checkpoints/max-iou-val-vox.pt
+#  teacher_pretrain: /data/stf/codes/lifusion/runs/nuscenes/spvcnn_cr2p0_instaug_multisweeps2/checkpoints/max-iou-val-vox.pt
+#  teacher_pretrain: /data/stf/codes/lifusion/runs/nuscenes/spvcnn_cr2p0_instaug_inst_rotate_inst_trans_ep40/checkpoints/max-iou-val-vox.pt
+  in_channel: 4
+  name: spvcnn_swiftnet18_spformer_tsd_full
+#  cr: 2.0
+  cr: 1.0
+  cr_t: 2.0
+  quant_size_scale: 24
+  patch_size: 1
+  window_size: 6
+  drop_path_rate: 0.3
+  window_size_sphere: [ 2, 2, 120 ]
+  window_size_scale: [ 2.0, 2.0 ]
+  a: 0.0125
+  align_loss: 'mse'
+
+debug:
+  show_image: False
+  debug_val: True
+
+eval:
+  run_pix_decoder: True
+  run_align_loss: True
